@@ -1,5 +1,24 @@
 import express, { RequestHandler } from 'express'
-import { Configs, Route } from './types'
+
+// export type Methods = 'get' | 'post' | 'patch' | 'put' | 'delete'
+export type Methods = 'get'
+
+export interface Configs {
+  port?: number
+  delay?: number
+}
+
+export interface Route<T> {
+  method: Methods
+  path: string
+  data: T[]
+  statusInfo?: {
+    status: number
+    success: boolean
+    message?: string
+  }
+  delay?: number
+}
 
 class Server {
   private app: express.Express = express()
@@ -25,11 +44,12 @@ class Server {
 
       const status = statusInfo ? statusInfo.status : 200
       const success = statusInfo ? statusInfo.success : true
-      const message = statusInfo
-        ? statusInfo.message
-        : success
-        ? 'request was successfull'
-        : 'request was failed'
+      const message =
+        statusInfo && statusInfo.message
+          ? statusInfo.message
+          : success
+          ? 'request was successfull'
+          : 'request was failed'
 
       const currentDelay = delay ?? this.delay ?? 0
 
