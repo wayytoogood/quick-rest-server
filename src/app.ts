@@ -48,7 +48,7 @@ class Server {
         statusInfo && statusInfo.message
           ? statusInfo.message
           : success
-          ? 'request was successfull'
+          ? 'request was successful'
           : 'request was failed'
 
       const currentDelay = delay ?? this.delay ?? 0
